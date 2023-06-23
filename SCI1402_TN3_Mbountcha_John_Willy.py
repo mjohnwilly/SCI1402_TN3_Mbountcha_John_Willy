@@ -1,85 +1,3 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# ![title](logo-teluq1.png)
-
-# ![title](titre.png)
-# ![title](sentiment.jpeg)
-
-# <ul style="font-family: times, serif; font-size:15pt; color:black;">
-# Travail effectue par:
-# </ul>
-# <ul style="font-family: times, serif; font-size:15pt; color:black;">
-#     
-# __MBOUNTCHA TCHAMBA John Willy__
-#     
-# </ul>
-# 
-
-# In[1]:
-
-
-import warnings
-warnings.filterwarnings("ignore")
-
-
-# In[2]:
-
-
-from IPython.core.display import display, HTML
-display(HTML("<style>.container { width:80% !important; }</style>"))
-
-
-# In[3]:
-
-
-get_ipython().run_cell_magic('javascript', '', 'IPython.OutputArea.prototype._should_scroll = function(lines) {\n    return false;\n}')
-
-
-# In[ ]:
-
-
-
-
-
-# **Introduction**
-# 
-# Le mot **sentiment** fait référence à l’émotion ou à la sensation. L’analyse des sentiments est faite pour déterminer comment un public cible accueille et perçoit quelque chose.
-# 
-# L'analyse des sentiments est donc le processus qui consiste à analyser un texte numérique pour déterminer si le ton émotionnel du message est positif, négatif ou neutre.
-# 
-# La valeur croissante de l’analyse des sentiments est due à son efficacité prouvée pour les entreprises, les marques du monde entier et les elections. Elle est particulièrement utile pour mener des études de marché ainsi que pour surveiller la présence des marques sur Internet et sur différents réseaux sociaux.
-# 
-# L'analyse des sentiments est une application des technologies de traitement du langage naturel (NLP) qui entraînent les logiciels informatiques à comprendre le texte d'une manière similaire à celle des humains. L'analyse passe généralement par plusieurs étapes avant d'adresser le résultat final.
-# 
-# 1. [Importation des bibliotheques](#p1)
-# 2. [Analyse Exploratoire des donnees](#p2)
-# 3. [Etude statistique de la variable text](#p9)
-# 3. [Pretraitement des donnees](#p3)
-# 4. [Decoupage des donnees](#p4)
-# 5. [TF-IDF Vectoriser](#p5)
-# 6. [Creation et evaluation des modeles](#p6)
-# 7. [Enregistrement du meilleur modele](#p7)
-# 8. [Deploiement](#p8)
-# 
-# Notre Dataset provient du site Kaggle a l'adresse https://www.kaggle.com/datasets/crowdflower/twitter-airline-sentiment. Il représente un ensemble de tweets faits par des clients sur US Airline
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# ## <a name="p1">1.Importation des bibliotheques</a>
-
-# In[4]:
-
 
 import pandas as pd
 import numpy as np
@@ -103,55 +21,11 @@ from wordcloud import WordCloud
 from sklearn import metrics
 from sklearn.metrics import precision_score,recall_score,f1_score,accuracy_score, confusion_matrix, classification_report
 
-
-# ## <a name="p2">2.Analyse Exploratoire des Donnees</a>
-
-# <ul style="font-family: times, serif; font-size:14pt; color:red;">
-#     
-# __a. Lecture de la base donnees__
-#     
-# </ul>
-
-# In[5]:
-
-
-#Lecture du Dataset
 df=pd.read_csv("Tweets_Airline.csv", encoding = 'utf8')
 
-
-# In[6]:
-
-
-#Affichage de l'enetete du Dataframe
 df.head()
 
-
-# In[7]:
-
-
 df.tail()
-
-
-# In[ ]:
-
-
-
-
-
-# <ul style="font-family: times, serif; font-size:14pt; color:red;">
-#     
-# __b. comprehension des donnees__
-#     
-# </ul>
-
-# In[ ]:
-
-
-
-
-
-# In[8]:
-
 
 def exploration(df):
     qnt=0
@@ -192,20 +66,7 @@ def exploration(df):
     print("Sur les 17 variables, {} sont quantitatives {} et {} sont qualitatives {}".format(qnt,quant, qlt, qualt))
     print("=================================================================================") 
 
-
-# In[9]:
-
-
 exploration(df)
-
-
-# <ul style="font-family: times, serif; font-size:14pt; color:red;">
-#     
-# __c. Recherche des valeurs manquantes__
-#     
-# </ul>
-
-# In[10]:
 
 
 def detectValeurManquante(df):
@@ -218,87 +79,12 @@ def detectValeurManquante(df):
     print((df.isna().sum()/df.shape[0])*100)
 
 
-# In[11]:
-
-
 detectValeurManquante(df)
-
-
-# <ul style="font-family: times, serif; font-size:14pt; color:red;">
-#     
-# __c. Conclusion__
-#     
-# </ul>
-# 
-# Nous remarquons apres cette premiere analyse que que les variables qui retiendrons le plus notre attention sont :
-# 
-#     -airline_sentiment
-#     -text
-#     
-# Le reste ne faisant pas partir de l'objet de notre étude sera tout simplement supprimé a l'étape de prétraitement.
-# 
-# La variable **airline_sentiment** sera encodée
-# 
-# Nous allons poursuivre notre analyse avec une étude statistique des variables retenues.
-
-# In[ ]:
-
-
-
-
-
-# ## <a name="p9">3.Etude statistique de la variable text</a>
-
-# In[ ]:
-
-
-
-
-
-# <ul style="font-family: times, serif; font-size:14pt; color:red;">
-#     
-# __a. Nombre d'individu par modalite__
-#     
-# </ul>
-
-# In[12]:
 
 
 df.airline_sentiment.value_counts()
 
-
-# In[ ]:
-
-
-
-
-
-# <ul style="font-family: times, serif; font-size:14pt; color:red;">
-#     
-# __b. Statistique descriptive__
-#     
-# </ul>
-
-# In[13]:
-
-
 df.airline_sentiment.describe().T
-
-
-# In[ ]:
-
-
-
-
-
-# <ul style="font-family: times, serif; font-size:14pt; color:red;">
-#     
-# __c. Diagramme circulaire__
-#     
-# </ul>
-
-# In[14]:
-
 
 def DiagrammeCirculaire(df,vars):    
     #fig = plt.figure(figsize=(15,20))
@@ -312,143 +98,18 @@ def DiagrammeCirculaire(df,vars):
         plt.legend(loc="lower left",bbox_to_anchor=(0.8,1.0))
         plt.show()
 
-
-# In[ ]:
-
-
-
-
-
-# In[15]:
-
-
 DiagrammeCirculaire(df,['airline_sentiment'])
-
-
-# In[ ]:
-
-
-
-
-
-# <ul style="font-family: times, serif; font-size:14pt; color:red;">
-#     
-# __d. Diagramme en baton__
-#     
-# </ul>
-
-# In[16]:
-
 
 sn.countplot(x = df['airline_sentiment'],palette='plasma')
 plt.xticks(rotation = 'horizontal')
 
-
-# In[ ]:
-
-
-
-
-
-# <ul style="font-family: times, serif; font-size:14pt; color:red;">
-#     
-# __e.Conclusion__
-#     
-# </ul>
-# 
-# Nous remarquons que les données ne sont pas balancées. Il y a beaucoup plus d'avis négatifs que d'avis positifs ou neutres.
-# 
-# C'est la raison pour laquelle au niveau du prétraitement nous essayerons d'equilibrer les donnees en applicant un sous echantillonnage
-
-# In[ ]:
-
-
-
-
-
-# ## <a name="p3">4.Pretraitement</a>
-
-# Le prétraitement des données est un processus de préparation des données brutes et de leur adaptation à un modèle d'apprentissage automatique.
-# Le prétraitement de texte est aussi une étape importante pour les tâches de traitement du langage naturel (NLP). 
-# 
-# Il transforme le texte en une forme plus digeste afin que les algorithmes d'apprentissage automatique puissent mieux fonctionner. 
-# Les étapes de prétraitement prises sont :
-# 
-# **_Minuscules:_** chaque texte est converti en minuscules.
-# 
-# **_Remplacement des URL:_** les liens commençant par "http" ou "https" ou "www" sont remplacés par "URL".
-# 
-# **_Remplacer les emojis:_** Remplacez les emojis en utilisant un dictionnaire prédéfini contenant les emojis avec leur signification. (ex: ":)" à "EMOJIsmile")
-# 
-# **_Remplacement des noms d'utilisateur:_** remplacez @Usernames par le mot "USER". (ex : "@Kaggle" à "USER")
-# 
-# **_Suppression des non-alphabets:_** remplacement des caractères à l'exception des alphabets par un espace.
-# 
-# **_Suppression des lettres consécutives:_** 3 lettres consécutives ou plus sont remplacées par 2 lettres. (Par exemple: "Heyyyy" à "Heyy", "Niceee" à "Nice")
-# 
-# **_Suppression des mots courts:_** les mots d'une longueur inférieure à 2 sont supprimés.
-# 
-# **_Suppression des mots vides:_** les mots vides sont les mots anglais qui n'ajoutent pas beaucoup de sens à une phrase. Ils peuvent être ignorés en toute sécurité sans sacrifier le sens de la phrase. (ex: "the", "he", "have")
-# 
-# **_Lemmatisation:_** La lemmatisation est le processus de conversion d'un mot en sa forme de base. (Par exemple : « great » à « good »)
-# 
-
-# In[ ]:
-
-
-
-
-
-# <ul style="font-family: times, serif; font-size:14pt; color:red;">
-#     
-# __a.Suppression des colonnes indesirables__
-#     
-# </ul>
-
-# In[17]:
-
-
 df_Pre=df[['airline_sentiment','text']]
-
-
-# In[18]:
-
 
 df_Pre.head()
 
-
-# In[19]:
-
-
 df_Pre['text_len'] = [len(t) for t in df_Pre.text]
 
-
-# In[20]:
-
-
 df_Pre
-
-
-# In[ ]:
-
-
-
-
-
-# <ul style="font-family: times, serif; font-size:14pt; color:red;">
-#     
-# __b.Nettoyage de la variable text__
-#     
-# </ul>
-
-# In[ ]:
-
-
-
-
-
-# In[21]:
-
 
 def preprocess(text):
     
