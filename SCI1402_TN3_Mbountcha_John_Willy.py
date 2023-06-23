@@ -16,8 +16,6 @@ from sklearn import metrics
 import os
 import string
 from sklearn.preprocessing import LabelEncoder
-from PIL import Image, ImageDraw, ImageFont
-from wordcloud import WordCloud
 from sklearn import metrics
 from sklearn.metrics import precision_score,recall_score,f1_score,accuracy_score, confusion_matrix, classification_report
 
@@ -266,77 +264,6 @@ df_Pre['Text_clean'] = df_Pre['Text_clean'].apply(lambda text:lematizing(text))
 
 
 
-
-# In[27]:
-
-
-neg_tweets = df_Pre[df_Pre.airline_sentiment == "negative"]
-neg_string = []
-for t in neg_tweets.Text_clean:
-    neg_string.append(t)
-neg_string = pd.Series(neg_string).str.cat(sep=' ')
-wordcloud = WordCloud(width=1600, height=800,max_font_size=200).generate(neg_string)
-plt.figure(figsize=(12,10))
-plt.imshow(wordcloud, interpolation="bilinear")
-plt.axis("off")
-plt.show()
-
-
-# In[ ]:
-
-
-
-
-
-# In[28]:
-
-
-pos_tweets = df_Pre[df_Pre.airline_sentiment == "positive"]
-pos_string = []
-for t in pos_tweets.Text_clean:
-    pos_string.append(t)
-pos_string = pd.Series(pos_string).str.cat(sep=' ')
-wordcloud = WordCloud(width=1600, height=800,max_font_size=200,colormap='magma').generate(pos_string) 
-plt.figure(figsize=(12,10)) 
-plt.imshow(wordcloud, interpolation="bilinear") 
-plt.axis("off") 
-plt.show()
-
-
-# In[ ]:
-
-
-
-
-
-# In[29]:
-
-
-neu_tweets = df_Pre[df_Pre.airline_sentiment == "neutral"]
-neu_string = []
-for t in neu_tweets.Text_clean:
-    neu_string.append(t)
-neu_string = pd.Series(neu_string).str.cat(sep=' ')
-wordcloud = WordCloud(width=1600, height=800,max_font_size=200,colormap='plasma').generate(neu_string) 
-plt.figure(figsize=(12,10)) 
-plt.imshow(wordcloud, interpolation="bilinear") 
-plt.axis("off") 
-plt.show()
-
-
-# In[ ]:
-
-
-
-
-
-# <ul style="font-family: times, serif; font-size:14pt; color:darkgreen;">
-#     
-# __Les mots les plus frequents__
-#     
-# </ul>
-
-# In[30]:
 
 
 def showmostfrequentwords(text,no_of_words):
