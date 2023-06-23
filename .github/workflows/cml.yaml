@@ -1,4 +1,4 @@
-name: model-supervisÃ© RL
+name: Classification
 on: [push]
 jobs:
   run:
