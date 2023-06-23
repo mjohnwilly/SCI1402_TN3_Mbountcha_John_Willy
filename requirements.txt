@@ -3,5 +3,4 @@ scikit-learn
 matplotlib
 seaborn
 numpy
-nltk 
-collections
+nltk
