@@ -190,7 +190,7 @@ df_Pre['Text_clean'] = df_Pre['text'].apply(lambda x: preprocess(x))
 # In[23]:
 
 
-nltk.download('stopwords')
+#nltk.download('stopwords')
 from nltk.corpus import stopwords
 stop_words = set(stopwords.words('english'))
 
@@ -229,7 +229,7 @@ df_Pre['Text_clean'] = df_Pre['Text_clean'].apply(lambda text:removestopwords(te
 # In[25]:
 
 
-import nltk
+#import nltk
 from nltk.stem import WordNetLemmatizer
 
 lemma=WordNetLemmatizer()
