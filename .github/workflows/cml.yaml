@@ -1,4 +1,4 @@
-name: Classifications
+name: Classification
 on: [push]
 jobs:
   run:
