@@ -15,9 +15,9 @@ jobs:
           python SCI1402_TN3_Mbountcha_John_Willy.py
           # Write your CML report
           echo "## Metriques:" >> reports.md
-          cat metrics.txt >> report.md
+          cat Metric_Classification.txt >> report.md
           git config --global user.email "mjohnwilly@yahoo.fr"
           git config --global user.name "mjohnwilly"
-          git add reports.md metrics.txt
+          git add reports.md Metric_Classification.txt
           git commit -m "pousser vers github repository"
           git push origin HEAD:master
