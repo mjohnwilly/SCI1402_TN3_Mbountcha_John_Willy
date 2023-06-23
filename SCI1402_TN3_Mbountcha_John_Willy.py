@@ -5,7 +5,6 @@ import seaborn as sn
 import matplotlib.pyplot as plt
 import re
 import nltk
-from collections import Counter
 from sklearn.feature_extraction.text import TfidfVectorizer,CountVectorizer
 from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeClassifier
